@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Employee by Name</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h2
+        {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-container input[type="text"] {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .search-container input[type="button"],
+        .search-container a.back-button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+            color: white;
+        }
+
+        .search-container input[type="button"] {
+            background-color: #4a90e2;
+            border: none;
+        }
+
+        .search-container input[type="button"]:hover {
+            background-color: #357ab8;
+        }
+
+        .search-container a.back-button {
+            background-color: #888;
+        }
+
+        .search-container a.back-button:hover {
+            background-color: #555;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4a90e2;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e6f0ff;
+        }
+
+        td {
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                flex-direction: column;
+            }
+
+            .search-container input[type="button"],
+            .search-container a.back-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h2>Search Employee by Name</h2>
+
+<div class="search-container">
+    <input type="text" id="nameInput" placeholder="Enter employee name">
+    <input type="button" value="Search" onclick="searchEmployee()">
+    <a href="index.html" class="back-button">â† Back</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>City</th>
+        <th>Phone</th>
+        <th>Department</th>
+        <th>Salary</th>
+    </tr>
+    </thead>
+    <tbody id="employeeTableBody">
+    <!-- Results appear here -->
+    </tbody>
+</table>
+
+<script>
+    function searchEmployee() {
+        const name = document.getElementById("nameInput").value.trim();
+        if (!name) {
+            alert("Please enter a name.");
+            return;
+        }
+
+        fetch(`http://localhost:8083/api/employee/search/${name}`)
+            .then(response => {
+                if (!response.ok) throw new Error("Network response was not ok: " + response.status);
+                return response.json();
+            })
+            .then(data => {
+                const tableBody = document.getElementById("employeeTableBody");
+                tableBody.innerHTML = "";
+
+                if (!data || data.length === 0) {
+                    tableBody.innerHTML = "<tr><td colspan='6' style='text-align:center;'>No employee found</td></tr>";
+                    return;
+                }
+
+                data.forEach(emp => {
+                    const row = `<tr>
+                        <td>${emp.id}</td>
+                        <td>${emp.name}</td>
+                        <td>${emp.city}</td>
+                        <td>${emp.phone}</td>
+                        <td>${emp.department}</td>
+                        <td>${emp.salary}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            })
+            .catch(error => {
+                alert("Error fetching employee data: " + error);
+            });
+    }
+
+    // Press Enter to search
+    document.getElementById("nameInput").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") searchEmployee();
+    });
+</script>
+
+</body>
+</html>

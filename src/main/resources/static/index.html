@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Management System</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body
+        {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #6a85f1, #9ec9ff);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 420px;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.7s ease-in-out;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #333;
+            font-size: 28px;
+        }
+
+        .menu-btn {
+            display: block;
+            padding: 14px;
+            margin: 14px 0;
+            background: #4a67ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 500;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(74, 103, 255, 0.3);
+        }
+
+        .menu-btn:hover {
+            background: #354ee4;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-btn span {
+            margin-right: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>ðŸ‘¨â€ðŸ’¼ Employee Management</h1>
+
+    <a class="menu-btn" href="add-employee.html"><span>âž•</span> Add Employee</a>
+    <a class="menu-btn" href="update-employee.html"><span>âœï¸</span> Update Employee</a>
+    <a class="menu-btn" href="delete-employee.html"><span>ðŸ—‘ï¸</span> Delete Employee</a>
+    <a class="menu-btn" href="view-all-employees.html"><span>ðŸ“‹</span> View All Employees</a>
+    <a class="menu-btn" href="search-by-name.html"><span>ðŸ”</span> Search Employee</a>
+</div>
+
+</body>
+</html>

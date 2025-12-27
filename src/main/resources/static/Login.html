@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Employee Management System</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body
+        {
+            font-family: "Poppins", sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0f2027;
+            color: white;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(74,103,255,0.2);
+            animation: float 15s infinite;
+        }
+
+        .circle:nth-child(1) { width: 200px; height: 200px; top: 10%; left: 5%; animation-delay: 0s; }
+        .circle:nth-child(2) { width: 150px; height: 150px; top: 70%; left: 80%; animation-delay: 5s; }
+        .circle:nth-child(3) { width: 250px; height: 250px; top: 40%; left: 50%; animation-delay: 2s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-30px) translateX(20px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 10;
+            width: 380px;
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #ffffff;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 22px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 50px 14px 15px;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            background: rgba(255,255,255,0.25);
+            box-shadow: 0 0 10px rgba(74,103,255,0.5);
+        }
+
+        .icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #4a67ff;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        button:hover {
+            background: #354ee0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        #error {
+            color: #ff7070;
+            background: rgba(255, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        @media(max-width: 450px){
+            .login-container {
+                width: 90%;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+
+<div class="login-container">
+    <h2>ðŸ” Admin Login</h2>
+
+    <div id="error">Invalid username or password!</div>
+
+    <div class="input-group">
+        <input type="text" id="username" placeholder="Enter Username">
+        <span class="icon">ðŸ‘¤</span>
+    </div>
+
+    <div class="input-group">
+        <input type="password" id="password" placeholder="Enter Password">
+        <span class="icon" onclick="togglePassword()">ðŸ‘ï¸</span>
+    </div>
+
+    <button onclick="login()">Login</button>
+</div>
+
+<script>
+    function togglePassword() {
+        const pass = document.getElementById("password");
+        pass.type = pass.type === "password" ? "text" : "password";
+    }
+
+    function login() {
+        const user = document.getElementById("username").value.trim();
+        const pass = document.getElementById("password").value.trim();
+        const errorBox = document.getElementById("error");
+
+        const adminUser = "Kanchan";
+        const adminPass = "K@nch@n09";
+
+        if(user === adminUser && pass === adminPass){
+            errorBox.style.display = "none";
+            window.location.href = "index.html";
+        } else {
+            errorBox.style.display = "block";
+        }
+    }
+</script>
+
+</body>
+</html>

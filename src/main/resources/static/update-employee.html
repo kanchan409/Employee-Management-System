@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Employee</title>
+
+    <style>
+        body
+        {
+            font-family: "Poppins", sans-serif;
+            background: #eef1ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 430px;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        label {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 5px;
+            display: block;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4a67ff;
+            box-shadow: 0 0 6px rgba(74,103,255,0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            background: #4a67ff;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #3a52e2;
+        }
+
+        #msg {
+            text-align: center;
+            margin-top: 12px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>Update Employee</h2>
+
+    <label>Enter Employee ID:</label>
+    <input type="number" id="id" placeholder="Enter Employee ID">
+
+    <form id="updateForm">
+        <label>Name:</label>
+        <input type="text" id="name" placeholder="Enter New Name">
+
+        <label>City:</label>
+        <input type="text" id="city" placeholder="Enter New City">
+
+        <label>Email:</label>
+        <input type="text" id="email" placeholder="Enter New Email">
+
+        <label>Phone:</label>
+        <input type="text" id="phone" placeholder="Enter New Phone">
+
+        <label>Department:</label>
+        <input type="text" id="department" placeholder="Enter Department">
+
+        <label>Salary:</label>
+        <input type="number" id="salary" placeholder="Enter Salary">
+
+        <button type="submit">Update</button>
+    </form>
+    <button style="margin-top:10px; background:#777;" onclick="goBack()">â¬… Back</button>
+
+    <p id="msg"></p>
+</div>
+
+<script>
+    document.getElementById("updateForm").addEventListener("submit", function(e){
+        e.preventDefault();
+
+        const employee = {
+            name: document.getElementById("name").value,
+            city: document.getElementById("city").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            department: document.getElementById("department").value,
+            salary: document.getElementById("salary").value
+        };
+
+        let id = document.getElementById("id").value;
+
+        fetch(`http://localhost:8083/api/update`, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({...employee, id: parseInt(id)})
+        })
+        .then(r => r.json())
+        .then(d => {
+            const msg = document.getElementById("msg");
+            msg.style.color = "green";
+            msg.innerText = "Employee updated successfully!";
+        })
+        .catch(err => {
+            const msg = document.getElementById("msg");
+            msg.style.color = "red";
+            msg.innerText = "Update failed!";
+            console.error(err);
+        });
+    });
+
+    function goBack() {
+    window.location.href = "index.html"; // à¤®à¥à¤–à¥à¤¯ menu page à¤šà¤¾ path à¤¦à¥à¤¯à¤¾
+}
+
+</script>
+
+</body>
+</html>

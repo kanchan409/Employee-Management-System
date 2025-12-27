@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Employees</title>
+
+    <style>
+        body
+        {
+            font-family: "Poppins", sans-serif;
+            background: #eef1ff;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #4a67ff;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #364ee0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: #4a67ff;
+            color: white;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background: #f5f6ff;
+        }
+
+        tr:hover {
+            background: #e2e6ff;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>All Employees</h2>
+
+    <button onclick="goBack()">Back</button>
+    <button onclick="loadData()">Load Employees</button>
+
+    <table id="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>Phone</th>
+            <th>Department</th>
+            <th>Salary</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script>
+    function loadData() {
+        fetch("http://localhost:8083/api/employee")
+            .then(r => r.json())
+            .then(data => {
+                let rows = "";
+
+                if (data.length === 0) {
+                    rows = `<tr><td colspan="6" style="color:red; font-weight:600;">No employees found</td></tr>`;
+                } else {
+                    data.forEach(emp => {
+                        rows += `
+                        <tr>
+                            <td>${emp.id}</td>
+                            <td>${emp.name}</td>
+                            <td>${emp.city}</td>
+                            <td>${emp.phone}</td>
+                            <td>${emp.department}</td>
+                            <td>${emp.salary}</td>
+                        </tr>`;
+                    });
+                }
+
+                document.querySelector("#table tbody").innerHTML = rows;
+            })
+            .catch(err => {
+                console.error(err);
+                document.querySelector("#table tbody").innerHTML =
+                    `<tr><td colspan="6" style="color:red; font-weight:600;">Error loading data</td></tr>`;
+            });
+    }
+    function goBack() {
+    window.location.href = "index.html"; // à¤®à¥à¤–à¥à¤¯ menu page à¤šà¤¾ path à¤¦à¥à¤¯à¤¾
+}
+
+</script>
+
+</body>
+</html>
